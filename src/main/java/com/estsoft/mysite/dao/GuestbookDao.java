@@ -8,15 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.estsoft.db.DBConnection;
 import com.estsoft.mysite.vo.GuestbookVo;
 
+@Repository
 public class GuestbookDao {
+	@Autowired
 	private DBConnection dbConnection;
-
-	public GuestbookDao( DBConnection dbConnection ) {
-		this.dbConnection = dbConnection;
-	}
 	
 	public GuestbookVo get( Long no ) {
 		GuestbookVo vo = null;
@@ -106,7 +107,8 @@ public class GuestbookDao {
 		}
 	}
 	
-	public void delete( GuestbookVo vo ) {
+	public int delete( GuestbookVo vo ) {
+		int countDeleted = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try{
@@ -115,9 +117,12 @@ public class GuestbookDao {
 			pstmt = conn.prepareStatement( sql );
 			pstmt.setLong( 1,  vo.getNo() );
 			pstmt.setString( 2, vo.getPassword() );
-			pstmt.executeUpdate();
+			countDeleted = pstmt.executeUpdate();
+			
+			return countDeleted;
 		} catch( SQLException ex ) {
 			System.out.println( "error:" + ex );
+			return 0;
 		} finally {
 			try{
 				if( pstmt != null ) {

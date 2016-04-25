@@ -54,7 +54,7 @@ public class UserController {
 		
 		//로그인 성공
 		session.setAttribute( "authUser", userVo );
-		return "redirect:/main";
+		return "redirect:/";
 	}
 	
 	@RequestMapping( "/logout" )
@@ -66,7 +66,7 @@ public class UserController {
 			session.invalidate();
 		}
 		
-		return "redirect:/main";
+		return "redirect:/";
 	}
 	
 	@RequestMapping( "/checkemail" )
