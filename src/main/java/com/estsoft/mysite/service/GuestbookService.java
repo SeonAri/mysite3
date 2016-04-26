@@ -14,6 +14,7 @@ public class GuestbookService {
 	GuestbookDao guestbookDao;
 
 	public List<GuestbookVo> getMessageList() {
+		
 		return guestbookDao.getList();
 	}
 	

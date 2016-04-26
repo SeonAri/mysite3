@@ -39,6 +39,20 @@
 			<version>5.1.38</version>
 		</dependency>
 
+		<!-- Common DBCP(Database Connection Pool) -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		
+		<!-- spring jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 		<!-- JSTL -->
 		<dependency>
 			<groupId>jstl</groupId>
