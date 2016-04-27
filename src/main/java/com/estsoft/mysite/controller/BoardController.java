@@ -1,12 +1,14 @@
 package com.estsoft.mysite.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.estsoft.mysite.vo.BoardVo;
+import com.estsoft.mysite.vo.UserVo;
 
 @Controller()
 @RequestMapping("/board")
@@ -25,10 +27,17 @@ public class BoardController {
 	}
 
 	@RequestMapping("/insert")
-	@ResponseBody
-	public String insert( @ModelAttribute BoardVo vo ) {
-		System.out.println( vo );
-		return "/board/insert";
+	public String insert( HttpSession session, @ModelAttribute BoardVo vo ) {
+		// 로그인 사용자 체크
+		UserVo authUser = (UserVo)session.getAttribute( "authUser" );
+		if( authUser == null ) {
+			return "redirect:/user/loginform";
+		}
+		
+		vo.setUserNo( authUser.getNo() );
+		boardService.writeBoard( vo );
+		
+		return "redirect:/board";
 	}
 	
 }
