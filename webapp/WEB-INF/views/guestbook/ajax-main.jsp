@@ -16,7 +16,7 @@ var page = 1;
 var dialogDelete = null;
 var fetchList = function() {
 	$.ajax({
-		url: "${pageContext.request.contextPath }/guestbook?a=ajax-list&p=" + page,
+		url: "${pageContext.request.contextPath }/guestbook/ajaxlist?p=" + page,
 		type: "get",
 		dataType: "json",
 		data: "",
@@ -75,20 +75,18 @@ $(function(){
 
 		// AJAX 통신
 		$.ajax({
-			url:"${pageContext.request.contextPath }/guestbook", 
+			url:"${pageContext.request.contextPath }/guestbook/ajaxinsert", 
 			type: "post",
 			dataType: "json",
-			data: "a=ajax-insert" +
-				   "&name=" + name + 
-				   "&pass=" + password +
-				   "&content=" + message,
+			data: "name=" + name + 
+				   "&password=" + password +
+				   "&message=" + message,
 			success: function( response ){
-				// console.log( response );
 				$( "#gb-list" ).prepend( renderHtml( response.data ) );	
 			},
 			error: function( xhr/*XMLHttpRequest*/, status, error ) {
 				console.error( status + ":" + error );
-			}			
+			}
 		});
 	});
 	
@@ -114,12 +112,9 @@ $(function(){
 	//삭제 버튼 클릭 이벤트 매핑( LIVE Event )
 	$( document ).on( "click", ".a-del", function( event ) {
 		event.preventDefault();
-
+		
 		var no = $(this).attr( "data-no" ); 
-		//console.log( no );	
 		$( "#del-no" ).val( no );
-
-		//$( "#dialogMessage" ).dialog();
 		dialogDelete.dialog( "open" );
 	});
 	
@@ -133,21 +128,40 @@ $(function(){
         	"삭제": function() {
         		var no = $( "#del-no" ).val();
         		var password = $( "#del-password" ).val();
-        		console.log( "clicked:" + no + ":" + password );
-        		
         		$.ajax( {
-        			url
-        			data: "a=ajax-delete&no=&password=", 
+        			url: "${pageContext.request.contextPath }/guestbook/ajaxdelete",
+        			type: "post",
+        			dataType: "json",
+        			data: "no=" + no + "&password=" + password,
+        			success: function(response) {
+        				 if( response.result == "fail" ) {
+        					 console.log( response.message );
+        					 return;
+        				 }
+        				 if( response.data == null ) {
+        			      	$(".validateTips").hide();
+        			      	$(".validateTips.error").show();
+        					$( "#del-password" ).val( "" );
+        				 } else {
+        					 dialogDelete.dialog( "close" );
+        					 $( "#li-" + response.data ).remove();
+        				 }
+        			},
+        			error: function( xhr/*XMLHttpRequest*/, status, error ) {
+        				console.error( status + ":" + error );
+        			}
         		});
-        		
         	},
         	"취소": function() {
         		dialogDelete.dialog( "close" );
         	}
       	},
+      	open: function() {
+      		$(".validateTips").show();
+      		$(".validateTips.error").hide();
+      	},
       	close: function() {
-			//form[ 0 ].reset();
-        	//allFields.removeClass( "ui-state-error" );
+      		$("#dialog-form form").get( 0 ).reset();
       	}
     });	
 	
@@ -187,8 +201,9 @@ $(function(){
 	<div id="dialogMessage"  title="팝업 다이알로그 예제" style="display:none">
   		<p style="line-height:50px">Hello World</p>
 	</div>
-	<div id="dialog-form" title="메세지 비밀번호 입력">
-		<p class="validateTips">메세지의 비밀번호를 입력해 주세요.</p>
+	<div id="dialog-form" title="메세지 비밀번호 입력" style="display:none">
+		<p class="validateTips" style="display:none">메세지의 비밀번호를 입력해 주세요.</p>
+		<p class="validateTips error" style="display:none">비밀번호가 일치하지 않습니다.</p>
  	 	<form style="margin-top:20px">
       		<label for="password">비밀번호</label>
       		<input type="hidden"  id="del-no"  value="">

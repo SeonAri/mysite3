@@ -14,16 +14,24 @@ public class GuestbookService {
 	GuestbookDao guestbookDao;
 
 	public List<GuestbookVo> getMessageList() {
-		
 		return guestbookDao.getList();
+	}
+
+	public List<GuestbookVo> getMessageList( int page ) {
+		return guestbookDao.getList( page );
 	}
 	
 	public boolean deleteMessage( GuestbookVo vo ) {
 		return guestbookDao.delete( vo ) == 1;
 	}
 	
-	public boolean insertMessage( GuestbookVo vo ) {
-		Long no = guestbookDao.insert(vo);
-		return no != 0;
+	public GuestbookVo insertMessage( GuestbookVo vo ) {
+		Long no = guestbookDao.insert( vo );
+		if( no == 0 ) {
+			return null;
+		}
+		
+		GuestbookVo guestbookVo = guestbookDao.get( no );
+		return guestbookVo;
 	}
 }

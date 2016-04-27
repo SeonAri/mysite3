@@ -21,6 +21,18 @@
 		]]>     
 	</select>
 	
+	<select id="selectPageList" resultType="guestbookvo" parameterType="int">
+		<![CDATA[	
+	    	SELECT	 no,
+				    	 name,
+					     DATE_FORMAT( reg_date, '%Y-%m-%d %p %h:%i:%s' ) as regDate, 
+				  	     message 
+	    	  FROM   guestbook 
+		ORDER BY   reg_date desc
+			  LIMIT	#{page*5 - 5 }, 5	
+		]]>     
+	</select>
+	
 	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
 		INSERT INTO guestbook 
@@ -37,11 +49,4 @@
 		WHERE  no = #{no }
 		   AND  passwd = password(#{password })
 	</delete> 
-	
-	<delete id="delete2" parameterType="map">
-		DELETE
-		  FROM guestbook 
-		WHERE  no = #{no }
-		   AND  passwd = password(#{password })
-	</delete> 	
 </mapper>
