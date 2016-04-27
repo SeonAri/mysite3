@@ -24,5 +24,21 @@
 		<![CDATA[
 		INSERT INTO user VALUES (null, #{name }, #{email }, password(#{password }), #{gender } )
 		]]>
-	</insert>	
+	</insert>
+	
+	<update id="update" parameterType="UserVo">
+		<![CDATA[
+		update member
+		   set name = #{name },
+		]]>   
+		<if test="password != ''">
+			<![CDATA[	
+			   password = #{password },
+			]]>	
+		</if>
+		<![CDATA[	   
+			   gender = #{gender } 
+		 where no = #{no }
+		]]> 
+	</update>		
 </mapper>
