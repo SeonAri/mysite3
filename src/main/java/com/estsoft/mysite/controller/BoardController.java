@@ -35,7 +35,13 @@ public class BoardController {
 	}
 
 	@RequestMapping("/write")
-	public String write() {
+	public String write( HttpSession session ) {
+		// 로그인 사용자 체크
+		UserVo authUser = (UserVo)session.getAttribute( "authUser" );
+		if( authUser == null ) {
+			return "redirect:/user/loginform";
+		}
+		
 		return "/board/write";
 	}
 
