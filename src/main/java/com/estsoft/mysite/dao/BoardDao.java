@@ -8,15 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.estsoft.db.DBConnection;
 import com.estsoft.mysite.vo.BoardVo;
 
+@Repository
 public class BoardDao {
+	
+	@Autowired
 	private DBConnection dbConnection;
-
-	public BoardDao( DBConnection dbConnection ) {
-		this.dbConnection = dbConnection;
-	}
 
 	public BoardVo get( Long boardNo ) {
 		BoardVo boardVo = null;
