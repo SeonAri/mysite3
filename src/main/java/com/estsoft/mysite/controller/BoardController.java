@@ -1,9 +1,12 @@
 package com.estsoft.mysite.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,7 +15,7 @@ import com.estsoft.mysite.service.BoardService;
 import com.estsoft.mysite.vo.BoardVo;
 import com.estsoft.mysite.vo.UserVo;
 
-@Controller()
+@Controller
 @RequestMapping("/board")
 public class BoardController {
 
@@ -21,8 +24,13 @@ public class BoardController {
 	
 	@RequestMapping( "" )
 	public String list(
-		@RequestParam( value="p", required=true, defaultValue="1" )  Integer page,
-		@RequestParam( value="kwd", required=true, defaultValue="" )  String keyword ) {
+		@RequestParam( value="p", required=true, defaultValue="1" )  Long page,
+		@RequestParam( value="kwd", required=true, defaultValue="" )  String keyword,
+		Model model ) {
+		
+		Map<String, Object> map = boardService.listBoard( keyword, page );
+		model.addAttribute( "map", map );
+		
 		return "/board/list";
 	}
 
