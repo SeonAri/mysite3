@@ -44,19 +44,6 @@ public class UserController {
 		return "/user/loginform";
 	}
 	
-	@RequestMapping( "/login" )
-	public String login(@ModelAttribute UserVo vo, HttpSession session ) {
-		UserVo userVo = userService.login( vo );
-		if( userVo == null ) {
-			// 로그인 실패
-			return "user/loginform_fail";
-		}
-		
-		//로그인 성공
-		session.setAttribute( "authUser", userVo );
-		return "redirect:/";
-	}
-	
 	@RequestMapping( "/logout" )
 	public String logout( HttpSession session ) {
 		// 인증유무 체크
