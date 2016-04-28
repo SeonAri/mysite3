@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.estsoft.mysite.annotation.Auth;
 import com.estsoft.mysite.service.GuestbookService;
 import com.estsoft.mysite.vo.GuestbookVo;
 
@@ -22,7 +23,7 @@ public class GuestbookController {
 	
 	@Autowired
 	GuestbookService guestbookService;
-	
+
 	@RequestMapping( "" )
 	public String index( Model model ) {
 		List<GuestbookVo> list = guestbookService.getMessageList();

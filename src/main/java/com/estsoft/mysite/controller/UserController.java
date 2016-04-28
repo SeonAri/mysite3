@@ -44,18 +44,6 @@ public class UserController {
 		return "/user/loginform";
 	}
 	
-	@RequestMapping( "/logout" )
-	public String logout( HttpSession session ) {
-		// 인증유무 체크
-		UserVo authUser = (UserVo)session.getAttribute( "authUser" );
-		if( authUser != null ) {
-			session.removeAttribute( "authUser" );
-			session.invalidate();
-		}
-		
-		return "redirect:/";
-	}
-	
 	@RequestMapping( "/checkemail" )
 	@ResponseBody
 	public Object checkEmail( 
