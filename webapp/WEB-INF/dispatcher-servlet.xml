@@ -7,8 +7,7 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 	xmlns:mvc="http://www.springframework.org/schema/mvc">
-
-	<!-- 2. validator, conversionService, messageConverter를 자동으로 등록 -->
+	<!--1. validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -28,13 +27,15 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-	<!-- 1. 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
+	
+	<!-- 2. 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
 
+	<!-- 3. @Controller 스캔 -->
 	<context:annotation-config />
 	<context:component-scan base-package="com.estsoft.mysite" />
 
-	<!-- 3. 기본 뷰 리졸버 -->
+	<!-- 4. 뷰 리졸버 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -44,8 +45,9 @@
 		<property name="order" value="1" />
 	</bean>
 
-	<!-- Interceptors -->
+	<!-- 5. Interceptors -->
 	<mvc:interceptors>
+		<!--
 		<mvc:interceptor>
 			<mvc:mapping path="/board/**" />
 			<bean class="com.estsoft.mysite.interceptor.MyInterceptor" />
@@ -54,16 +56,15 @@
 			<mvc:mapping path="/guestbook/**" />
 			<bean class="com.estsoft.mysite.interceptor.MyInterceptor2" />
 		</mvc:interceptor>
+		  -->
 		<mvc:interceptor>
 			<mvc:mapping path="/user/login" />
 			<bean class="com.estsoft.mysite.interceptor.AuthLoginInterceptor" />
 		</mvc:interceptor>		
-
 		<mvc:interceptor>
 			<mvc:mapping path="/user/logout"/>
 			<bean class="com.estsoft.mysite.interceptor.AuthLogoutInterceptor" />
 		</mvc:interceptor>		
-
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/assets/**"/>
