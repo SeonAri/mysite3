@@ -45,10 +45,6 @@
 			<MaxFileSize>1MB</MaxFileSize>
 		</triggeringPolicy>
 	</appender>	
-
-
-
-
 	<!--
 		com.bit2015.logexample2 아래 패키지 로그들만 
 		C:\LogExample\logexample2.log 파일에 출력하는 로거
@@ -56,9 +52,8 @@
 	<logger name="com.estsoft.mysite.controller"  level="INFO" additivity="false">
             <appender-ref ref="fileAppender2" />
     </logger>
-    
 	<!--
-		com.bit2015.logexample3 아래 패키지 로그들만 
+		com.estsoft.mysite.dao 아래 패키지 로그들만 
 		C:\LogExample\logexample3.log 파일에 출력하는 로거
 	-->
 	<logger name="com.estsoft.mysite.dao"  level="WARN" additivity="false">
@@ -67,7 +62,7 @@
     </logger>    
 	
 	<!-- 루트(글로벌) 로거 -->
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="consoleAppender" />
 	</root>
 

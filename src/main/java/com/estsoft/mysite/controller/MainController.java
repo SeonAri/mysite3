@@ -1,11 +1,11 @@
 package com.estsoft.mysite.controller;
 
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.estsoft.mysite.annotation.Auth;
 
 @Controller
 public class MainController {
@@ -14,7 +14,10 @@ public class MainController {
 
 	@RequestMapping( "/" )
 	public String index() {
-		LOG.debug( "index called" );
+		LOG.debug( "#ex1 - debug log" );
+		LOG.info( "#ex1 - info log" );
+		LOG.warn( "#ex1 - warn log" );
+		LOG.error( "#ex1 - error log" );
 		return "/main/index";
 	}
 }

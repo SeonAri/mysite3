@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,61 +22,11 @@ public class BoardDao {
 	@Autowired
 	private DataSource dataSource;
 
+	@Autowired
+	private SqlSession sqlSession;
+
 	public BoardVo get( Long boardNo ) {
-		BoardVo boardVo = null;
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			conn = dataSource.getConnection();
-			
-			String sql =
-				"     SELECT  no, title, content, group_no, order_no, depth, user_no" +
-				"      FROM  board" + 
-				"      WHERE no = ?";
-			pstmt = conn.prepareStatement( sql );
-			
-			pstmt.setLong( 1, boardNo );
-			rs = pstmt.executeQuery();
-			if( rs.next() ) {
-				Long no = rs.getLong( 1 );
-				String title = rs.getString( 2 );
-				String content = rs.getString( 3 );
-				Integer groupNo = rs.getInt( 4 );
-				Integer orderNo = rs.getInt( 5 );
-				Integer depth = rs.getInt( 6 );
-				Long userNo = rs.getLong( 7 );
-				
-				boardVo = new BoardVo();
-				boardVo.setNo( no );
-				boardVo.setTitle( title );
-				boardVo.setContent( content );
-				boardVo.setGroupNo( groupNo );
-				boardVo.setOrderNo( orderNo );
-				boardVo.setDepth( depth );
-				boardVo.setUserNo( userNo );
-			}
-			
-			return boardVo;
-		} catch( SQLException ex ) {
-			System.out.println( "error: " + ex);
-			return boardVo;
-		} finally {
-			try{
-				if( rs != null ) {
-					rs.close();
-				}
-				if( pstmt != null ) {
-					pstmt.close();
-				}
-				if( conn != null ) {
-					conn.close();
-				}
-			}catch( SQLException ex ) {
-				ex.printStackTrace();
-			}
-		}
+		return sqlSession.selectOne( "board.getByNo", boardNo );
 	}
 	
 	public long getTotalCount( String keyword ) {

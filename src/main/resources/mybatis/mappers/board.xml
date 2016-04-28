@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<select id="getByNo" parameterType="long">
+		<![CDATA[
+		SELECT  no, title, content, group_no, order_no, depth, user_no
+		 FROM  board 
+		WHERE  no = #{no }	
+		]]>	
+	</select>
+	
+	<select id="getTotalCount" parameterType="string">
+		<![CDATA[
+		SELECT count(*) FROM  board a, user b WHERE a.user_no = b.no
+		]]>	
+		<choose>
+			<when test="keyword == null OR keyword == '' ">
+				<![CDATA[
+				AND ( title LIKE '%" + keyword + "%' OR title LIKE '%" + keyword + "%')
+				]]>	
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+		
+</mapper>
