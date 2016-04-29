@@ -2,8 +2,6 @@ package com.estsoft.mysite.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.estsoft.mysite.annotation.Auth;
+import com.estsoft.mysite.annotation.AuthUser;
 import com.estsoft.mysite.service.BoardService;
 import com.estsoft.mysite.vo.BoardVo;
 import com.estsoft.mysite.vo.UserVo;
@@ -41,15 +40,11 @@ public class BoardController {
 		return "/board/write";
 	}
 
-	@Auth( "admin" )
+	@Auth
 	@RequestMapping("/insert")
-//	public String insert( @AuthUser UserVo authUser, @ModelAttribute BoardVo vo ) {
-	public String insert( HttpSession session, @ModelAttribute BoardVo vo ) {
-		// 로그인 사용자 체크
-		UserVo authUser = (UserVo)session.getAttribute( "authUser" );
-		if( authUser == null ) {
-			return "redirect:/user/loginform";
-		}
+	public String insert( @AuthUser UserVo authUser, @ModelAttribute BoardVo vo ) {
+		
+		System.out.println( authUser );
 		
 		vo.setUserNo( authUser.getNo() );
 		boardService.writeBoard( vo );
