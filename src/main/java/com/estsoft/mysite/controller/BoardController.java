@@ -42,7 +42,7 @@ public class BoardController {
 
 	@Auth
 	@RequestMapping("/insert")
-	public String insert( @AuthUser UserVo authUser, @ModelAttribute BoardVo vo ) {
+	public String insert(@ModelAttribute BoardVo vo,	@AuthUser UserVo authUser ) {
 		
 		System.out.println( authUser );
 		
