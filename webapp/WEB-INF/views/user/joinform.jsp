@@ -96,8 +96,11 @@ $(function(){
 					<input id="name" name="name" type="text" value="">
 					<spring:hasBindErrors name="userVo">
 					   <c:if test="${errors.hasFieldErrors('name') }">
-					        <br>
-					        <strong style="color:red">${errors.getFieldError( 'name' ).defaultMessage }</strong>
+					        	<br>
+					        	<strong style="color:red">
+					        		<c:set var="errorName" value="${errors.getFieldError( 'name' ).codes[0] }"/>
+					        		<spring:message code="${errorName }" text="${errors.getFieldError( 'name' ).defaultMessage }" />
+					        	</strong>		
 					   </c:if>
 					</spring:hasBindErrors>
 
@@ -109,7 +112,6 @@ $(function(){
 					   <c:if test="${errors.hasFieldErrors('email') }">
 					        <br>
 					        <strong style="color:red">
-					         	${errors.getFieldError( 'email' ) }<br>
 					        	<c:set var="errorEmail" value="${errors.getFieldError( 'email' ).codes[0] }"/>
 					        	<spring:message code="${errorEmail }" text="${errors.getFieldError( 'email' ).defaultMessage }" />	
 					        </strong>
