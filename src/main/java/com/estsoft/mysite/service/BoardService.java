@@ -19,7 +19,6 @@ public class BoardService {
 	private final int LIST_BLOCKSIZE = 5;  // 페이지 리스트에서 표시되는 페이지 수
 	
 	public Map<String, Object> listBoard( String keyword, Long page ){
-
 		//1. calculate pager's basic data 
 		long totalCount = boardDao.getTotalCount( keyword );
 		long pageCount = (long)Math.ceil( (double)totalCount / LIST_PAGESIZE );

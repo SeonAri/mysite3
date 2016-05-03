@@ -10,7 +10,7 @@ import org.springframework.util.StopWatch;
 @Aspect
 public class MeasureDaoExecutionTimeAspect {
 
-	@Around( "execution( * *..dao.*.*(..)) || execution( * *..service.*.*(..)) || execution( * *..controller.*.*(..))" )	
+	@Around( "execution( * *..dao.*.*(..))" )	
 	public Object around(ProceedingJoinPoint pjp) throws Throwable {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
