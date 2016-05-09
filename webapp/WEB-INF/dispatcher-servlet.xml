@@ -58,7 +58,7 @@
 	<!-- 5. Interceptors -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/user/login" />
+			<mvc:mapping path="/blog/**" />
 			<bean class="com.estsoft.mysite.interceptor.AuthLoginInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>

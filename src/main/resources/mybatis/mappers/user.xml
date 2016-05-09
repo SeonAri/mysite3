@@ -7,7 +7,6 @@
 		SELECT no, email FROM user WHERE email=#{email }
 		]]>
 	</select>
-
 	<select id="selectByEmailAndPassword" resultType="uservo"  parameterType="uservo">
 		<![CDATA[
 		SELECT no, name, email FROM user WHERE email=#{email } AND passwd=password(#{password })
