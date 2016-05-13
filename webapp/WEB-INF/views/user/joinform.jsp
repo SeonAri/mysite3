@@ -83,6 +83,10 @@ $(function(){
 })
 </script>	
 </head>
+<spring:hasBindErrors name="userVo">
+--${errors.hasFieldErrors('name') }--<br>
+--${errors.hasFieldErrors('email') }---
+</spring:hasBindErrors>
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/include/header.jsp" />
